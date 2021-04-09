@@ -25,6 +25,7 @@ def visits_to_timepoints(
 
     if modality == "T1":
         mri_list_subj = mri_list_subj[mri_list_subj[visit_field] != "ADNI Baseline"]
+        mri_list_subj = mri_list_subj[mri_list_subj[visit_field] != "ADNI Baseline"]
 
     visits = dict()
     unique_visits = list(mri_list_subj[visit_field].unique())
@@ -33,7 +34,7 @@ def visits_to_timepoints(
     # We try to obtain the corresponding image Visit for a given VISCODE
     for adni_row in adnimerge_subj.iterrows():
         visit = adni_row[1]
-
+        #ToDO @horlavanasta: change  get_preferred_visit_name to name that exists among files
         preferred_visit_name = get_preferred_visit_name(visit)
 
         if preferred_visit_name in unique_visits:

@@ -2,6 +2,14 @@
 
 """Module for converting T1 of ADNI."""
 
+def available_scans(subj, source_dir):
+    import os
+    subject_ids=[]
+    for (dirpath, dirnames, filenames) in os.walk(os.path.join(source_dir, subj)):
+        for f in filenames:
+            if f.endswith(".nii"):
+                subject_ids.append(f[f.rindex('_I') + 2:f.rindex('.nii')])
+    return subject_ids
 
 def convert_adni_t1(
     source_dir, csv_dir, dest_dir, conversion_dir, subjs_list=None, mod_to_update=False
@@ -37,7 +45,7 @@ def convert_adni_t1(
     cprint(f"{Fore.GREEN}T1 conversion done.{Fore.RESET}")
 
 
-def compute_t1_paths(source_dir, csv_dir, dest_dir, subjs_list, conversion_dir):
+def compute_t1_paths(source_dir, csv_dir, dest_dir, subjs_list, conversion_dir, only_existing_data=True):
     """Compute the paths to T1 MR images and store them in a TSV file.
 
     Args:
@@ -101,11 +109,20 @@ def compute_t1_paths(source_dir, csv_dir, dest_dir, subjs_list, conversion_dir):
 
         mprage_meta_subj = mprage_meta[mprage_meta.SubjectID == subj]
         mprage_meta_subj = mprage_meta_subj.sort_values("ScanDate")
-
         mri_quality_subj = mri_quality[mri_quality.RID == int(subj[-4:])]
         mayo_mri_qc_subj = mayo_mri_qc[mayo_mri_qc.RID == int(subj[-4:])]
 
+        if only_existing_data:
+            subject_ids=available_scans(subj, source_dir)
+
+            adnimerge_subj = adnimerge_subj[adnimerge_subj.IMAGEUID.isin([float(el) for el in subject_ids])]
+            mprage_meta_subj = mprage_meta_subj[mprage_meta_subj.ImageUID.isin([int(el) for el in subject_ids])]
+
+
+
         # Obtain corresponding timepoints for the subject visits
+
+        #ToDO @horlavanasta: change here
         visits = visits_to_timepoints(
             subj, mprage_meta_subj, adnimerge_subj, "T1", "Visit", "ScanDate"
         )
@@ -267,10 +284,10 @@ def adni1go2_image(
         if not check_qc(scan, subject_id, visit_str, mri_quality_subj):
             return None
 
-    n3 = scan.Sequence.find("N3")
-    # Sequence ends in 'N3' or in 'N3m'
-    sequence = scan.Sequence[: n3 + 2 + int(scan.Sequence[n3 + 2] == "m")]
-    sequence = replace_sequence_chars(sequence)
+    # n3 = scan.Sequence.find("N3")
+    # # Sequence ends in 'N3' or in 'N3m'
+    # sequence = scan.Sequence[: n3 + 2 + int(scan.Sequence[n3 + 2] == "m")]
+    sequence = replace_sequence_chars(scan.Sequence)
 
     return {
         "Subject_ID": subject_id,

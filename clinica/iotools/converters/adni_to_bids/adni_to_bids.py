@@ -136,8 +136,11 @@ class AdniToBids(Converter):
 
         # Load a file with subjects list or compute all the subjects
         if subjs_list_path is not None:
-            cprint("Loading a subjects lists provided by the user...")
-            subjs_list = [line.rstrip("\n") for line in open(subjs_list_path)]
+            cprint("Loading a lists of subjects in source folder provided by the user...")
+
+
+            subjs_list = [x.name for x in os.scandir(source_dir)]
+            # subjs_list = [line.rstrip("\n") for line in open(subjs_list_path)]
             subjs_list_copy = copy(subjs_list)
 
             # Check that there are no errors in subjs_list given by the user
