@@ -102,6 +102,7 @@ class AdniToBids(Converter):
         clinical_dir,
         dest_dir,
         subjs_list_path=None,
+        only_existing_data=False,
         modalities=["T1", "PET_FDG", "PET_AMYLOID", "PET_TAU", "DWI", "FLAIR", "fMRI"],
         force_new_extraction=False,
     ):
@@ -135,12 +136,13 @@ class AdniToBids(Converter):
         adni_merge = pd.read_csv(adni_merge_path)
 
         # Load a file with subjects list or compute all the subjects
-        if subjs_list_path is not None:
+        if only_existing_data == True or subjs_list_path is not None :
             cprint("Loading a lists of subjects in source folder provided by the user...")
 
-
-            subjs_list = [x.name for x in os.scandir(source_dir)]
-            # subjs_list = [line.rstrip("\n") for line in open(subjs_list_path)]
+            if subjs_list_path is not None and only_existing_data == False :
+                subjs_list = [line.rstrip("\n") for line in open(subjs_list_path)]
+            else:
+                subjs_list = [x.name for x in os.scandir(source_dir)]
             subjs_list_copy = copy(subjs_list)
 
             # Check that there are no errors in subjs_list given by the user
@@ -188,5 +190,5 @@ class AdniToBids(Converter):
                     dest_dir,
                     conversion_dir,
                     subjs_list,
-                    force_new_extraction,
+                    force_new_extraction,only_existing_data
                 )

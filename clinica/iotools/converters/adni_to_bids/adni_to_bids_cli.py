@@ -2,6 +2,17 @@
 
 import clinica.engine as ce
 
+def str2bool(v):
+    import argparse
+    if isinstance(v, bool):
+       return v
+    if v.lower() in ('yes', 'true', 't', 'y', '1'):
+        return True
+    elif v.lower() in ('no', 'false', 'f', 'n', '0'):
+        return False
+    else:
+        raise argparse.ArgumentTypeError('Boolean value expected.')
+
 
 class AdniToBidsCLI(ce.CmdParser):
     def define_name(self):
@@ -52,6 +63,12 @@ class AdniToBidsCLI(ce.CmdParser):
             "T1, PET_FDG, PET_AMYLOID, PET_TAU, DWI, FLAIR, fMRI.",
         )
 
+        self._args.add_argument(
+            "-oe",
+            "--only_existing_data", type=str2bool, default=False,
+            help="(Optional) if set to True, only files in provided source folder will be considered",
+        )
+
     def run_command(self, args):
         from clinica.iotools.converters.adni_to_bids.adni_to_bids import AdniToBids
         from clinica.utils.exceptions import ClinicaParserError
@@ -73,6 +90,7 @@ class AdniToBidsCLI(ce.CmdParser):
                 self.absolute_path(args.clinical_data_directory),
                 self.absolute_path(args.bids_directory),
                 args.subjects_list,
+                args.only_existing_data,
                 args.modalities,
                 args.force_new_extraction,
             )

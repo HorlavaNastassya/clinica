@@ -12,8 +12,7 @@ def available_scans(subj, source_dir):
     return subject_ids
 
 def convert_adni_t1(
-    source_dir, csv_dir, dest_dir, conversion_dir, subjs_list=None, mod_to_update=False
-):
+    source_dir, csv_dir, dest_dir, conversion_dir, subjs_list=None, mod_to_update=False, only_existing_data=False):
     """Convert T1 MR images of ADNI into BIDS format.
 
     Args:
@@ -39,13 +38,13 @@ def convert_adni_t1(
     cprint(
         f"Calculating paths of T1 images. Output will be stored in {conversion_dir}."
     )
-    images = compute_t1_paths(source_dir, csv_dir, dest_dir, subjs_list, conversion_dir)
+    images = compute_t1_paths(source_dir, csv_dir, dest_dir, subjs_list, conversion_dir, only_existing_data)
     cprint("Paths of T1 images found. Exporting images into BIDS ...")
     paths_to_bids(images, dest_dir, "t1", mod_to_update=mod_to_update)
     cprint(f"{Fore.GREEN}T1 conversion done.{Fore.RESET}")
 
 
-def compute_t1_paths(source_dir, csv_dir, dest_dir, subjs_list, conversion_dir, only_existing_data=True):
+def compute_t1_paths(source_dir, csv_dir, dest_dir, subjs_list, conversion_dir, only_existing_data=False):
     """Compute the paths to T1 MR images and store them in a TSV file.
 
     Args:
@@ -143,6 +142,7 @@ def compute_t1_paths(source_dir, csv_dir, dest_dir, subjs_list, conversion_dir, 
                     mri_quality_subj,
                     mayo_mri_qc_subj,
                     preferred_field_strength=1.5 if cohort == "ADNI1" else 3.0,
+                    only_existing_data=only_existing_data
                 )
             elif cohort == "ADNI3":
                 image_dict = adni3_image(
@@ -225,6 +225,7 @@ def adni1go2_image(
     mri_quality_subj,
     mayo_mri_qc_subj,
     preferred_field_strength=3.0,
+    only_existing_data=False
 ):
     """Select the preferred scan for a subject in a visit, given the subject belongs to ADNI 1, Go or 2 cohorts.
 
@@ -283,11 +284,14 @@ def adni1go2_image(
         # Check QC for second scan
         if not check_qc(scan, subject_id, visit_str, mri_quality_subj):
             return None
+    if only_existing_data==True:
+        sequence = replace_sequence_chars(scan.Sequence)
+    else:
+        n3 = scan.Sequence.find("N3")
+        # Sequence ends in 'N3' or in 'N3m'
+        sequence = scan.Sequence[: n3 + 2 + int(scan.Sequence[n3 + 2] == "m")]
 
-    # n3 = scan.Sequence.find("N3")
-    # # Sequence ends in 'N3' or in 'N3m'
-    # sequence = scan.Sequence[: n3 + 2 + int(scan.Sequence[n3 + 2] == "m")]
-    sequence = replace_sequence_chars(scan.Sequence)
+
 
     return {
         "Subject_ID": subject_id,

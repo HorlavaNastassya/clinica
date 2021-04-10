@@ -4,7 +4,7 @@
 
 
 def convert_adni_av45_fbb_pet(
-    source_dir, csv_dir, dest_dir, conversion_dir, subjs_list=None, mod_to_update=False
+    source_dir, csv_dir, dest_dir, conversion_dir, subjs_list=None, mod_to_update=False, only_existing_data=False
 ):
     """Convert AV-45 and Florbetaben PET images of ADNI into BIDS format.
 
