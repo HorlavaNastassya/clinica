@@ -55,7 +55,7 @@ def create_merge_file(
     participants_df = pd.read_csv(path.join(bids_dir, "participants.tsv"), sep="\t")
 
     sessions, subjects = get_subject_session_list(
-        bids_dir, ss_file=tsv_file, use_session_tsv=True
+        bids_dir, ss_file=tsv_file, use_session_tsv=False
     )
     sub_ses_df = pd.DataFrame([[subject, session] for subject, session in zip(subjects, sessions)],
                               columns=["participant_id", "session_id"])
