@@ -7,7 +7,7 @@ try:  # for pip >= 10
 except ImportError:  # for pip <= 9.0.3
     from pip.req import parse_requirements
 
-with open(join(dirname(__file__), "clinica/VERSION"), "rb") as f:
+with open(join(dirname(__file__), "clinicaml/VERSION"), "rb") as f:
     version = f.read().decode("ascii").strip()
 
 this_directory = abspath(dirname(__file__))
@@ -21,7 +21,7 @@ except Exception:
     requirements = [str(ir.requirement) for ir in install_reqs]
 
 setup(
-    name="clinica",
+    name="clinicaml",
     version=version,
     url="http://www.clinica.run",
     description="Software platform for clinical neuroimaging studies",
@@ -29,12 +29,12 @@ setup(
     long_description_content_type="text/markdown",
     author="ARAMIS Lab",
     maintainer="Clinica developers",
-    maintainer_email="clinica-user@inria.fr",
+    maintainer_email="clinicaml-user@inria.fr",
     license="MIT license",
     packages=find_packages(exclude=("tests", "tests.*")),
     include_package_data=True,
     zip_safe=False,
-    entry_points={"console_scripts": ["clinica = clinica.cmdline:execute"]},
+    entry_points={"console_scripts": ["clinicaml = clinicaml.cmdline:execute"]},
     classifiers=[
         "Development Status :: 4 - Beta",
         "Environment :: Console",

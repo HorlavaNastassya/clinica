@@ -88,7 +88,7 @@ Clinica currently supports macOS and Linux. It can be installed by typing the
 following command:
 
 ```sh
-pip install clinica
+pip install clinicaml
 ```
 
 To avoid conflicts with other versions of the dependency packages installed by

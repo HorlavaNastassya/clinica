@@ -27,7 +27,7 @@ def test_run_Nifd2Bids(cmdopt):
     import shutil
     from os.path import abspath, dirname, join
 
-    from clinica.iotools.converters.nifd_to_bids.nifd_to_bids import (
+    from clinicaml.iotools.converters.nifd_to_bids.nifd_to_bids import (
         convert_clinical_data,
         convert_images,
     )
@@ -61,7 +61,7 @@ def test_run_Nifd2Bids(cmdopt):
 def test_run_Oasis2Bids(cmdopt):
     from os.path import abspath, dirname, join
 
-    from clinica.iotools.converters.oasis_to_bids.oasis_to_bids import OasisToBids
+    from clinicaml.iotools.converters.oasis_to_bids.oasis_to_bids import OasisToBids
 
     root = join(dirname(abspath(__file__)), pardir, "data", "Oasis2Bids")
 
@@ -83,7 +83,7 @@ def test_run_Oasis2Bids(cmdopt):
 def test_run_Adni2Bids(cmdopt):
     from os.path import abspath, dirname, join
 
-    from clinica.iotools.converters.adni_to_bids.adni_to_bids import AdniToBids
+    from clinicaml.iotools.converters.adni_to_bids.adni_to_bids import AdniToBids
 
     root = join(dirname(abspath(__file__)), pardir, "data", "Adni2Bids")
 
@@ -114,7 +114,7 @@ def test_run_CreateSubjectSessionList(cmdopt):
     from os import remove
     from os.path import abspath, dirname, join
 
-    from clinica.iotools.utils import data_handling as dt
+    from clinicaml.iotools.utils import data_handling as dt
 
     root = join(dirname(abspath(__file__)), pardir, "data", "CreateSubjectSessionList")
 
@@ -139,7 +139,7 @@ def test_run_CreateMergeFile(cmdopt):
     from os import remove
     from os.path import abspath, dirname, join
 
-    from clinica.iotools.utils import data_handling as dt
+    from clinicaml.iotools.utils import data_handling as dt
 
     root = join(dirname(abspath(__file__)), pardir, "data", "CreateMergeFile")
 
@@ -171,7 +171,7 @@ def test_run_ComputeMissingModalities(cmdopt):
     from os import remove
     from os.path import abspath, dirname, exists, join
 
-    from clinica.iotools.utils import data_handling as dt
+    from clinicaml.iotools.utils import data_handling as dt
 
     root = join(dirname(abspath(__file__)), pardir, "data", "ComputeMissingMod")
 
@@ -205,7 +205,7 @@ def test_run_ComputeMissingModalities(cmdopt):
 def test_run_Aibl2Bids(cmdopt):
     from os.path import abspath, dirname, join
 
-    from clinica.iotools.converters.aibl_to_bids.aibl_to_bids import (
+    from clinicaml.iotools.converters.aibl_to_bids.aibl_to_bids import (
         convert_clinical_data,
         convert_images,
     )
@@ -231,7 +231,7 @@ def test_run_Aibl2Bids(cmdopt):
 def test_run_CenterNifti(cmdopt):
     from os.path import abspath, dirname, join
 
-    from clinica.iotools.utils.data_handling import center_all_nifti
+    from clinicaml.iotools.utils.data_handling import center_all_nifti
 
     root = dirname(abspath(join(abspath(__file__), pardir)))
     root = join(root, "data", "CenterNifti")

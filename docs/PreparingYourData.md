@@ -37,7 +37,7 @@ sub-02           ses-M24
 You can generate this file using Clinica with command `create-subjects-visit`:
 
 ```bash
-clinica io create-subjects-visits bids_directory output_directory
+clinicaml io create-subjects-visits bids_directory output_directory
 ```
 
 More detail about the command can be found in the section Utilities in [I/O](./IO) page.

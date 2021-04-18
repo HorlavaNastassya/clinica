@@ -13,7 +13,7 @@ warnings.filterwarnings("ignore")
 def test_instantiate_T1FreeSurferCrossSectional():
     from os.path import abspath, dirname, join
 
-    from clinica.pipelines.t1_freesurfer.t1_freesurfer_pipeline import T1FreeSurfer
+    from clinicaml.pipelines.t1_freesurfer.t1_freesurfer_pipeline import T1FreeSurfer
 
     root = dirname(abspath(join(abspath(__file__), pardir)))
     root = join(root, "data", "T1FreeSurfer")
@@ -34,7 +34,7 @@ def test_instantiate_T1FreeSurferCrossSectional():
 def test_instantiate_T1VolumeTissueSegmentation():
     from os.path import abspath, dirname, join
 
-    from clinica.pipelines.t1_volume_tissue_segmentation.t1_volume_tissue_segmentation_pipeline import (
+    from clinicaml.pipelines.t1_volume_tissue_segmentation.t1_volume_tissue_segmentation_pipeline import (
         T1VolumeTissueSegmentation,
     )
 
@@ -52,7 +52,7 @@ def test_instantiate_T1VolumeTissueSegmentation():
 def test_instantiate_T1VolumeCreateDartel():
     from os.path import abspath, dirname, join
 
-    from clinica.pipelines.t1_volume_create_dartel.t1_volume_create_dartel_pipeline import (
+    from clinicaml.pipelines.t1_volume_create_dartel.t1_volume_create_dartel_pipeline import (
         T1VolumeCreateDartel,
     )
 
@@ -72,7 +72,7 @@ def test_instantiate_T1VolumeCreateDartel():
 def test_instantiate_T1VolumeDartel2MNI():
     from os.path import abspath, dirname, join
 
-    from clinica.pipelines.t1_volume_dartel2mni.t1_volume_dartel2mni_pipeline import (
+    from clinicaml.pipelines.t1_volume_dartel2mni.t1_volume_dartel2mni_pipeline import (
         T1VolumeDartel2MNI,
     )
 
@@ -92,7 +92,7 @@ def test_instantiate_T1VolumeDartel2MNI():
 def test_instantiate_T1VolumeRegisterDartel():
     from os.path import abspath, dirname, join
 
-    from clinica.pipelines.t1_volume_register_dartel.t1_volume_register_dartel_pipeline import (
+    from clinicaml.pipelines.t1_volume_register_dartel.t1_volume_register_dartel_pipeline import (
         T1VolumeRegisterDartel,
     )
 
@@ -112,7 +112,7 @@ def test_instantiate_T1VolumeRegisterDartel():
 def test_instantiate_T1VolumeParcellation():
     from os.path import abspath, dirname, join
 
-    from clinica.pipelines.t1_volume_parcellation.t1_volume_parcellation_pipeline import (
+    from clinicaml.pipelines.t1_volume_parcellation.t1_volume_parcellation_pipeline import (
         T1VolumeParcellation,
     )
 
@@ -131,7 +131,7 @@ def test_instantiate_T1VolumeParcellation():
 def test_instantiate_DWIPreprocessingUsingT1():
     from os.path import abspath, dirname, join
 
-    from clinica.pipelines.dwi_preprocessing_using_t1.dwi_preprocessing_using_t1_pipeline import (
+    from clinicaml.pipelines.dwi_preprocessing_using_t1.dwi_preprocessing_using_t1_pipeline import (
         DwiPreprocessingUsingT1,
     )
 
@@ -151,7 +151,7 @@ def test_instantiate_DWIPreprocessingUsingT1():
 def test_instantiate_DWIPreprocessingUsingPhaseDiffFieldmap():
     from os.path import abspath, dirname, join
 
-    from clinica.pipelines.dwi_preprocessing_using_phasediff_fieldmap.dwi_preprocessing_using_phasediff_fieldmap_pipeline import (
+    from clinicaml.pipelines.dwi_preprocessing_using_phasediff_fieldmap.dwi_preprocessing_using_phasediff_fieldmap_pipeline import (
         DwiPreprocessingUsingPhaseDiffFieldmap,
     )
 
@@ -171,7 +171,7 @@ def test_instantiate_DWIPreprocessingUsingPhaseDiffFieldmap():
 def test_instantiate_DWIDTI():
     from os.path import abspath, dirname, join
 
-    from clinica.pipelines.dwi_dti.dwi_dti_pipeline import DwiDti
+    from clinicaml.pipelines.dwi_dti.dwi_dti_pipeline import DwiDti
 
     root = dirname(abspath(join(abspath(__file__), pardir)))
     root = join(root, "data", "DWIDTI")
@@ -186,7 +186,7 @@ def test_instantiate_DWIDTI():
 def test_instantiate_DWIConnectome():
     from os.path import abspath, dirname, join
 
-    from clinica.pipelines.dwi_connectome.dwi_connectome_pipeline import DwiConnectome
+    from clinicaml.pipelines.dwi_connectome.dwi_connectome_pipeline import DwiConnectome
 
     root = dirname(abspath(join(abspath(__file__), pardir)))
     root = join(root, "data", "DWIConnectome")
@@ -203,7 +203,7 @@ def test_instantiate_DWIConnectome():
 def test_instantiate_PETVolume():
     from os.path import abspath, dirname, join
 
-    from clinica.pipelines.pet_volume.pet_volume_pipeline import PETVolume
+    from clinicaml.pipelines.pet_volume.pet_volume_pipeline import PETVolume
 
     root = dirname(abspath(join(abspath(__file__), pardir)))
     root = join(root, "data", "PETVolume")
@@ -225,7 +225,7 @@ def test_instantiate_PETVolume():
 def test_instantiate_PETLinear():
     from os.path import abspath, dirname, join
 
-    from clinica.pipelines.pet_linear.pet_linear_pipeline import PETLinear
+    from clinicaml.pipelines.pet_linear.pet_linear_pipeline import PETLinear
 
     root = dirname(abspath(join(abspath(__file__), pardir)))
     root = join(root, "data", "PETLinear")
@@ -243,7 +243,7 @@ def test_instantiate_PETLinear():
 def test_instantiate_StatisticsSurface():
     from os.path import abspath, dirname, join
 
-    from clinica.pipelines.statistics_surface.statistics_surface_pipeline import (
+    from clinicaml.pipelines.statistics_surface.statistics_surface_pipeline import (
         StatisticsSurface,
     )
 
@@ -271,7 +271,7 @@ def test_instantiate_StatisticsSurface():
 def test_instantiate_PETSurfaceCrossSectional():
     from os.path import abspath, dirname, join
 
-    from clinica.pipelines.pet_surface.pet_surface_pipeline import PetSurface
+    from clinicaml.pipelines.pet_surface.pet_surface_pipeline import PetSurface
 
     root = dirname(abspath(join(abspath(__file__), pardir)))
     root = join(root, "data", "PETSurface")
@@ -292,7 +292,7 @@ def test_instantiate_PETSurfaceCrossSectional():
 
 # def test_instantiate_PETSurfaceLongitudinal():
 #     from os.path import dirname, join, abspath
-#     from clinica.pipelines.pet_surface.pet_surface_pipeline import PetSurface
+#     from clinicaml.pipelines.pet_surface.pet_surface_pipeline import PetSurface
 #
 #     root = dirname(abspath(join(abspath(__file__), pardir)))
 #     root = join(root, 'data', 'PETSurfaceLongitudinal')
@@ -314,7 +314,7 @@ def test_instantiate_PETSurfaceCrossSectional():
 def test_instantiate_InputsML():
     from os.path import abspath, dirname, exists, join
 
-    from clinica.pipelines.machine_learning.input import (
+    from clinicaml.pipelines.machine_learning.input import (
         CAPSRegionBasedInput,
         CAPSVertexBasedInput,
         CAPSVoxelBasedInput,
@@ -396,7 +396,7 @@ def test_instantiate_InputsML():
 def test_instantiate_SpatialSVM():
     from os.path import abspath, dirname, join
 
-    from clinica.pipelines.machine_learning_spatial_svm.spatial_svm_pipeline import (
+    from clinicaml.pipelines.machine_learning_spatial_svm.spatial_svm_pipeline import (
         SpatialSVM,
     )
 
@@ -415,7 +415,7 @@ def test_instantiate_SpatialSVM():
 def test_instantiate_T1FreeSurferTemplate():
     from os.path import abspath, dirname, join
 
-    from clinica.pipelines.t1_freesurfer_longitudinal.t1_freesurfer_template_pipeline import (
+    from clinicaml.pipelines.t1_freesurfer_longitudinal.t1_freesurfer_template_pipeline import (
         T1FreeSurferTemplate,
     )
 
@@ -432,7 +432,7 @@ def test_instantiate_T1FreeSurferTemplate():
 def test_instantiate_T1FreeSurferLongitudinalCorrection():
     from os.path import abspath, dirname, join
 
-    from clinica.pipelines.t1_freesurfer_longitudinal.t1_freesurfer_longitudinal_correction_pipeline import (
+    from clinicaml.pipelines.t1_freesurfer_longitudinal.t1_freesurfer_longitudinal_correction_pipeline import (
         T1FreeSurferLongitudinalCorrection,
     )
 
@@ -449,7 +449,7 @@ def test_instantiate_T1FreeSurferLongitudinalCorrection():
 def test_instantiate_T1Linear():
     from os.path import abspath, dirname, join
 
-    from clinica.pipelines.t1_linear.t1_linear_pipeline import T1Linear
+    from clinicaml.pipelines.t1_linear.t1_linear_pipeline import T1Linear
 
     root = dirname(abspath(join(abspath(__file__), pardir)))
     root = join(root, "data", "T1Linear")
@@ -467,7 +467,7 @@ def test_instantiate_T1Linear():
 def test_instantiate_DLPrepareData():
     from os.path import abspath, dirname, join
 
-    from clinica.pipelines.deeplearning_prepare_data.deeplearning_prepare_data_pipeline import (
+    from clinicaml.pipelines.deeplearning_prepare_data.deeplearning_prepare_data_pipeline import (
         DeepLearningPrepareData,
     )
 
@@ -486,7 +486,7 @@ def test_instantiate_DLPrepareData():
 def test_instantiate_StatisticsVolume():
     from os.path import abspath, dirname, join
 
-    from clinica.pipelines.statistics_volume.statistics_volume_pipeline import (
+    from clinicaml.pipelines.statistics_volume.statistics_volume_pipeline import (
         StatisticsVolume,
     )
 
@@ -516,7 +516,7 @@ def test_instantiate_StatisticsVolume():
 def test_instantiate_StatisticsVolumeCorrection():
     from os.path import abspath, dirname, join
 
-    from clinica.pipelines.statistics_volume_correction.statistics_volume_correction_pipeline import (
+    from clinicaml.pipelines.statistics_volume_correction.statistics_volume_correction_pipeline import (
         StatisticsVolumeCorrection,
     )
 

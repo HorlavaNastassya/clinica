@@ -1,13 +1,13 @@
 # Project information
 site_name: Clinica Documentation
 site_author: Clinica contributors
-site_url: http://www.clinica.run/doc
+site_url: http://www.clinicaml.run/doc
 site_description: >-
   Software platform for clinical neuroimaging studies
 
 # Repository
-repo_name: aramislab/clinica
-repo_url: https://github.com/aramis-lab/clinica
+repo_name: aramislab/clinicaml
+repo_url: https://github.com/aramis-lab/clinicaml
 #edit_uri: master/edit/doc
 
 # Copyright
@@ -30,7 +30,7 @@ theme:
 
 # Customization
 extra_css:
-  - css/clinica.css
+  - css/clinicaml.css
 extra:
   feature:
     tabs: true

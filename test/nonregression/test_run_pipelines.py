@@ -18,7 +18,7 @@ def test_run_T1FreeSurferCrossSectional(cmdopt):
     # Data for this functional test comes from https://openneuro.org/datasets/ds000204
     from os.path import abspath, dirname, join
 
-    from clinica.pipelines.t1_freesurfer.t1_freesurfer_pipeline import T1FreeSurfer
+    from clinicaml.pipelines.t1_freesurfer.t1_freesurfer_pipeline import T1FreeSurfer
 
     working_dir = cmdopt
     root = dirname(abspath(join(abspath(__file__), pardir)))
@@ -82,7 +82,7 @@ def test_run_T1VolumeTissueSegmentation(cmdopt):
     import os
     from os.path import abspath, dirname, join
 
-    from clinica.pipelines.t1_volume_tissue_segmentation.t1_volume_tissue_segmentation_pipeline import (
+    from clinicaml.pipelines.t1_volume_tissue_segmentation.t1_volume_tissue_segmentation_pipeline import (
         T1VolumeTissueSegmentation,
     )
 
@@ -129,7 +129,7 @@ def test_run_T1VolumeCreateDartel(cmdopt):
     import shutil
     from os.path import abspath, dirname, join
 
-    from clinica.pipelines.t1_volume_create_dartel.t1_volume_create_dartel_pipeline import (
+    from clinicaml.pipelines.t1_volume_create_dartel.t1_volume_create_dartel_pipeline import (
         T1VolumeCreateDartel,
     )
 
@@ -210,7 +210,7 @@ def test_run_T1VolumeDartel2MNI(cmdopt):
     import shutil
     from os.path import abspath, dirname, join
 
-    from clinica.pipelines.t1_volume_dartel2mni.t1_volume_dartel2mni_pipeline import (
+    from clinicaml.pipelines.t1_volume_dartel2mni.t1_volume_dartel2mni_pipeline import (
         T1VolumeDartel2MNI,
     )
 
@@ -284,7 +284,7 @@ def test_run_T1VolumeRegisterDartel(cmdopt):
     import shutil
     from os.path import abspath, dirname, join
 
-    from clinica.pipelines.t1_volume_register_dartel.t1_volume_register_dartel_pipeline import (
+    from clinicaml.pipelines.t1_volume_register_dartel.t1_volume_register_dartel_pipeline import (
         T1VolumeRegisterDartel,
     )
 
@@ -360,7 +360,7 @@ def test_run_T1VolumeParcellation(cmdopt):
     import numpy as np
     import pandas as pds
 
-    from clinica.pipelines.t1_volume_parcellation.t1_volume_parcellation_pipeline import (
+    from clinicaml.pipelines.t1_volume_parcellation.t1_volume_parcellation_pipeline import (
         T1VolumeParcellation,
     )
 
@@ -421,7 +421,7 @@ def test_run_T1VolumeParcellation(cmdopt):
 def test_run_DWIPreprocessingUsingT1(cmdopt):
     from os.path import abspath, dirname, join
 
-    from clinica.pipelines.dwi_preprocessing_using_t1.dwi_preprocessing_using_t1_pipeline import (
+    from clinicaml.pipelines.dwi_preprocessing_using_t1.dwi_preprocessing_using_t1_pipeline import (
         DwiPreprocessingUsingT1,
     )
 
@@ -471,7 +471,7 @@ def test_run_DWIPreprocessingUsingPhaseDiffFieldmap(cmdopt):
     import warnings
     from os.path import abspath, dirname, join
 
-    from clinica.pipelines.dwi_preprocessing_using_phasediff_fieldmap.dwi_preprocessing_using_phasediff_fieldmap_pipeline import (
+    from clinicaml.pipelines.dwi_preprocessing_using_phasediff_fieldmap.dwi_preprocessing_using_phasediff_fieldmap_pipeline import (
         DwiPreprocessingUsingPhaseDiffFieldmap,
     )
 
@@ -526,7 +526,7 @@ def test_run_DWIDTI(cmdopt):
     import numpy as np
     import pandas as pds
 
-    from clinica.pipelines.dwi_dti.dwi_dti_pipeline import DwiDti
+    from clinicaml.pipelines.dwi_dti.dwi_dti_pipeline import DwiDti
 
     working_dir = cmdopt
     root = dirname(abspath(join(abspath(__file__), pardir)))
@@ -593,7 +593,7 @@ def test_run_DWIConnectome(cmdopt):
     import shutil
     from os.path import abspath, dirname, join
 
-    from clinica.pipelines.dwi_connectome.dwi_connectome_pipeline import DwiConnectome
+    from clinicaml.pipelines.dwi_connectome.dwi_connectome_pipeline import DwiConnectome
 
     # Initialization
     working_dir = join(abspath(cmdopt), "DWIConnectome")
@@ -685,7 +685,7 @@ def test_run_PETVolume(cmdopt):
     import shutil
     from os.path import abspath, dirname, join
 
-    from clinica.pipelines.pet_volume.pet_volume_pipeline import PETVolume
+    from clinicaml.pipelines.pet_volume.pet_volume_pipeline import PETVolume
 
     working_dir = cmdopt
     root = dirname(abspath(join(abspath(__file__), pardir)))
@@ -747,7 +747,7 @@ def test_run_PETVolume(cmdopt):
 def test_run_PETLinear(cmdopt):
     from os.path import abspath, dirname, join
 
-    from clinica.pipelines.pet_linear.pet_linear_pipeline import PETLinear
+    from clinicaml.pipelines.pet_linear.pet_linear_pipeline import PETLinear
 
     working_dir = cmdopt
     root = dirname(abspath(join(abspath(__file__), pardir)))
@@ -785,7 +785,7 @@ def test_run_StatisticsSurface(cmdopt):
     import numpy as np
     from scipy.io import loadmat
 
-    from clinica.pipelines.statistics_surface.statistics_surface_pipeline import (
+    from clinicaml.pipelines.statistics_surface.statistics_surface_pipeline import (
         StatisticsSurface,
     )
 
@@ -846,7 +846,7 @@ def test_run_PETSurfaceCrossSectional(cmdopt):
     import nibabel as nib
     import numpy as np
 
-    from clinica.pipelines.pet_surface.pet_surface_pipeline import PetSurface
+    from clinicaml.pipelines.pet_surface.pet_surface_pipeline import PetSurface
 
     working_dir = cmdopt
     root = dirname(abspath(join(abspath(__file__), pardir)))
@@ -917,7 +917,7 @@ def test_run_PETSurfaceCrossSectional(cmdopt):
 #     import shutil
 #     import nibabel as nib
 #     import numpy as np
-#     from clinica.pipelines.pet_surface.pet_surface_pipeline import PetSurface
+#     from clinicaml.pipelines.pet_surface.pet_surface_pipeline import PetSurface
 #
 #     working_dir = cmdopt
 #     root = dirname(abspath(join(abspath(__file__), pardir)))
@@ -972,7 +972,7 @@ def test_run_WorkflowsML(cmdopt):
     import warnings
     from os.path import abspath, dirname, join
 
-    from clinica.pipelines.machine_learning.ml_workflows import (
+    from clinicaml.pipelines.machine_learning.ml_workflows import (
         RegionBasedRepHoldOutLogisticRegression,
         RegionBasedRepHoldOutRandomForest,
         VertexBasedRepHoldOutDualSVM,
@@ -1079,7 +1079,7 @@ def test_run_SpatialSVM(cmdopt):
     import nibabel as nib
     import numpy as np
 
-    from clinica.pipelines.machine_learning_spatial_svm.spatial_svm_pipeline import (
+    from clinicaml.pipelines.machine_learning_spatial_svm.spatial_svm_pipeline import (
         SpatialSVM,
     )
 
@@ -1149,7 +1149,7 @@ def test_run_SpatialSVM(cmdopt):
 def test_run_T1Linear(cmdopt):
     from os.path import abspath, dirname, join
 
-    from clinica.pipelines.t1_linear.t1_linear_pipeline import T1Linear
+    from clinicaml.pipelines.t1_linear.t1_linear_pipeline import T1Linear
 
     working_dir = cmdopt
     root = dirname(abspath(join(abspath(__file__), pardir)))
@@ -1184,7 +1184,7 @@ def test_run_DLPrepareData(cmdopt):
     import shutil
     from os.path import abspath, dirname, join
 
-    from clinica.pipelines.deeplearning_prepare_data.deeplearning_prepare_data_pipeline import (
+    from clinicaml.pipelines.deeplearning_prepare_data.deeplearning_prepare_data_pipeline import (
         DeepLearningPrepareData,
     )
 
@@ -1259,7 +1259,7 @@ def test_run_StatisticsVolume(cmdopt):
     import nibabel as nib
     import numpy as np
 
-    from clinica.pipelines.statistics_volume.statistics_volume_pipeline import (
+    from clinicaml.pipelines.statistics_volume.statistics_volume_pipeline import (
         StatisticsVolume,
     )
 
@@ -1329,7 +1329,7 @@ def test_run_StatisticsVolumeCorrection(cmdopt):
     import shutil
     from os.path import abspath, dirname, join
 
-    from clinica.pipelines.statistics_volume_correction.statistics_volume_correction_pipeline import (
+    from clinicaml.pipelines.statistics_volume_correction.statistics_volume_correction_pipeline import (
         StatisticsVolumeCorrection,
     )
 
@@ -1374,7 +1374,7 @@ def test_run_T1FreeSurferTemplate(cmdopt):
     import shutil
     from os.path import abspath, dirname, join
 
-    from clinica.pipelines.t1_freesurfer_longitudinal.t1_freesurfer_template_pipeline import (
+    from clinicaml.pipelines.t1_freesurfer_longitudinal.t1_freesurfer_template_pipeline import (
         T1FreeSurferTemplate,
     )
 
@@ -1434,7 +1434,7 @@ def test_run_T1FreeSurferLongitudinalCorrection(cmdopt):
     import shutil
     from os.path import abspath, dirname, join
 
-    from clinica.pipelines.t1_freesurfer_longitudinal.t1_freesurfer_longitudinal_correction_pipeline import (
+    from clinicaml.pipelines.t1_freesurfer_longitudinal.t1_freesurfer_longitudinal_correction_pipeline import (
         T1FreeSurferLongitudinalCorrection,
     )
 

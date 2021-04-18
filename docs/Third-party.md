@@ -104,7 +104,7 @@ export SPM_HOME="/path/to/your/spm12"
 export PATH="/path/to/your/dcm2nii:$PATH"
 ```
 <!-- # Autocomplete system
-eval "$(register-python-argcomplete clinica)" -->
+eval "$(register-python-argcomplete clinicaml)" -->
 
 !!! Note
     `zsh` shell users will have to add this right before the last line of their configuration file to enable autocompletion in Clinica:

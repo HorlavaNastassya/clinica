@@ -39,7 +39,7 @@ The latest release of Clinica can be installed by using the conventional
 ```bash
 conda create --name clinicaEnv python=3.7
 conda activate clinicaEnv
-pip install clinica
+pip install clinicaml
 ```
 
 !!! info

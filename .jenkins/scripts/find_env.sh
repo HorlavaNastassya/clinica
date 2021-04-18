@@ -1,5 +1,5 @@
 #!/bin/bash
-# A shell script to launch clinica in CI machines
+# A shell script to launch clinicaml in CI machines
 
 # Name of the Conda environment according to the branch
 CLINICA_ENV_BRANCH="clinica_env_$BRANCH_NAME"

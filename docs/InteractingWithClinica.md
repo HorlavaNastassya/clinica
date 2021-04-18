@@ -42,7 +42,7 @@ Clinica's main usage is through command-line. Clinica supports autocompletion: t
 
 In general, a Clinica command-line has the following syntax:
 ```bash
-clinica category_of_command command argument options
+clinicaml category_of_command command argument options
 ```
 where the arguments are usually your input/output folders, and where the options look like `--flag_1 option_1 --flag_2 option_2`.
 
@@ -57,12 +57,12 @@ The command-line `clinica` has been divided into four main categories.
 
 This category allows the user to run the different image processing and analysis pipelines using the following syntax:
 ```bash
-clinica run modality-pipeline bids_directory caps_directory -tsv my_participants.tsv
+clinicaml run modality-pipeline bids_directory caps_directory -tsv my_participants.tsv
 ```
 "modality" is a prefix that corresponds to the data modality (e.g. T1, DWI, fMRI, PET) or to the category of processing (machine learning, statistics...).
 If you execute `clinica run --help`, you can see the list of `modality-pipeline` available: they correspond to the different pipelines displayed on the [main page of the documentation](..).
 
-<!-- ### clinica visualize
+<!-- ### clinicaml visualize
 
 !!! note
     We are currently rewriting this section. We will update this section ASAP. -->
@@ -82,7 +82,7 @@ These tools allow you to convert unorganized datasets from publicly available ne
 This category allows developers to generate the skeleton for a new pipeline. The syntax is:
 
 ```bash
-clinica generate template "Modality My Pipeline" -d output_folder
+clinicaml generate template "Modality My Pipeline" -d output_folder
 ```
 
 ## The main arguments
@@ -100,7 +100,7 @@ You will see the `group_label` flag when working on any group-wise analysis (e.g
 
 The `-tsv` flag allows you to specify in a TSV file the participants belonging to your subset. For instance, running the [FreeSurfer pipeline](../Pipelines/T1_FreeSurfer) on T1w MRI can be done using :
 ```shell
-clinica run t1-freesurfer path/to/my/bids/dataset path/where/results/will/be/stored -tsv my_list_of_subjects.tsv
+clinicaml run t1-freesurfer path/to/my/bids/dataset path/where/results/will/be/stored -tsv my_list_of_subjects.tsv
 ```
 where your TSV file looks as follows:
 ```text

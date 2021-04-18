@@ -73,8 +73,8 @@ launch:mac:
   script:
     - source activate $CLINICA_ENV_BRANCH_CLEAN
     - pip install --ignore-installed .
-    - eval "$(register-python-argcomplete clinica)"
-    - clinica --help
+    - eval "$(register-python-argcomplete clinicaml)"
+    - clinicaml --help
     - source deactivate
   
 
@@ -87,8 +87,8 @@ launch:linux:
   script:
     - source activate $CLINICA_ENV_BRANCH_CLEAN
     - pip install --ignore-installed .
-    - eval "$(register-python-argcomplete clinica)"
-    - clinica --help
+    - eval "$(register-python-argcomplete clinicaml)"
+    - clinicaml --help
     - source deactivate
 
 test:style:
@@ -105,7 +105,7 @@ test:instantiate:mac:
     - macOS
   script:
     - source activate $CLINICA_ENV_BRANCH_CLEAN
-    - module load clinica.all
+    - module load clinicaml.all
     - cd test
     - ln -s /Volumes/data/data_ci ./data
     - pytest --verbose -k 'test_instantiate'
@@ -118,7 +118,7 @@ test:instantiate:linux:
     - linux
   script:
     - source activate $CLINICA_ENV_BRANCH_CLEAN
-    - module load clinica.all
+    - module load clinicaml.all
     - cd test
     - ln -s /localdrive10TB/data/ci/data_ci_upgrade ./data
     - taskset -c 0-21 pytest 
@@ -140,7 +140,7 @@ test:run:mac:iotools:
     - schedules
   script:
     - source activate $CLINICA_ENV_BRANCH_CLEAN
-    - module load clinica.all
+    - module load clinicaml.all
     - cd test
     - ln -s /Volumes/data/data_ci ./data
     - pytest 
@@ -162,7 +162,7 @@ test:run:mac:pipelines:
     - schedules
   script:
     - source activate $CLINICA_ENV_BRANCH_CLEAN
-    - module load clinica.all
+    - module load clinicaml.all
     - cd test
     - ln -s /Volumes/data/data_ci ./data
     - pytest 
@@ -184,7 +184,7 @@ test:run:linux:iotools:
     - schedules
   script:
     - source activate $CLINICA_ENV_BRANCH_CLEAN
-    - module load clinica.all
+    - module load clinicaml.all
     - cd test
     - ln -s /localdrive10TB/data/ci/data_ci_upgrade ./data
     - pytest
@@ -207,7 +207,7 @@ test:run:linux:pipelines:
     - schedules
   script:
     - source activate $CLINICA_ENV_BRANCH_CLEAN
-    - module load clinica.all
+    - module load clinicaml.all
     - cd test
     - ln -s /localdrive10TB/data/ci/data_ci_upgrade ./data
     - pytest
@@ -225,10 +225,10 @@ pkg:
   tags:
     - macOS
   script:
-    - tar -cvzf --exclude='.gitignore' --exclude='.git' --exclude='.DS_Store' --exclude='.gitmodules' --exclude='.idea' --exclude='.vscode' --exclude='.gitlab-ci.yml' -f clinica-$CI_COMMIT_REF_NAME.tar.gz  ./*
+    - tar -cvzf --exclude='.gitignore' --exclude='.git' --exclude='.DS_Store' --exclude='.gitmodules' --exclude='.idea' --exclude='.vscode' --exclude='.gitlab-ci.yml' -f clinicaml-$CI_COMMIT_REF_NAME.tar.gz  ./*
   artifacts:
     name: "$CI_COMMIT_REF_NAME"
     paths:
-      - clinica-$CI_COMMIT_REF_NAME.tar.gz
+      - clinicaml-$CI_COMMIT_REF_NAME.tar.gz
   only:
     - tags
