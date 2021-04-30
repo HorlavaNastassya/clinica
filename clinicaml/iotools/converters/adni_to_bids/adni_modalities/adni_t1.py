@@ -44,7 +44,7 @@ def convert_adni_t1(
     cprint(f"{Fore.GREEN}T1 conversion done.{Fore.RESET}")
 
 
-def compute_t1_paths(source_dir, csv_dir, dest_dir, subjs_list, conversion_dir, only_existing_data=False):
+def compute_t1_paths(source_dir, csv_dir, dest_dir, subjs_list, conversion_dir, only_existing_data=False, unique_visits=True):
     """Compute the paths to T1 MR images and store them in a TSV file.
 
     Args:
@@ -101,7 +101,7 @@ def compute_t1_paths(source_dir, csv_dir, dest_dir, subjs_list, conversion_dir, 
 
     # We will convert the images for each subject in the subject list
     for subj in subjs_list:
-
+        t1_dfs_list_subj = []
         # Filter ADNIMERGE, MPRAGE METADATA and QC for only one subject and sort the rows/visits by examination date
         adnimerge_subj = adni_merge[adni_merge.PTID == subj]
         adnimerge_subj = adnimerge_subj.sort_values("EXAMDATE")
@@ -160,9 +160,24 @@ def compute_t1_paths(source_dir, csv_dir, dest_dir, subjs_list, conversion_dir, 
                         "i",
                     ],
                 )
-                t1_dfs_list.append(row_to_append)
+
+                t1_dfs_list_subj.append(row_to_append)
             else:
-                cprint("Image from subject" +str(subj) + "was skipped")
+                cprint("Image from subject " +str(subj) + " was skipped")
+        if len(t1_dfs_list_subj)>0:
+            if unique_visits:
+                row_to_append_subj = None
+
+                if len(t1_dfs_list_subj)>1:
+                    for subj_scan in t1_dfs_list_subj:
+                        if subj_scan.Field_Strength[0]==1.5:
+                            row_to_append_subj=subj_scan
+                t1_dfs_list.append(t1_dfs_list_subj[0] if row_to_append_subj is None else row_to_append_subj)
+
+            else:
+                for el in t1_dfs_list_subj:
+                    t1_dfs_list.append(el)
+
 
     if t1_dfs_list:
         t1_df = pd.concat(t1_dfs_list, ignore_index=True)
@@ -286,6 +301,7 @@ def adni1go2_image(
         # Check QC for second scan
         if not check_qc(scan, subject_id, visit_str, mri_quality_subj):
             return None
+
     if only_existing_data==True:
         sequence = replace_sequence_chars(scan.Sequence)
     else:
