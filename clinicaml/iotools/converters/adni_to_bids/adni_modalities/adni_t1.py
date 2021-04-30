@@ -336,6 +336,13 @@ def preferred_processed_scan(mprage_meta_subj, visit_str, unwanted_series_id=())
         filtered_mprage = mprage_meta_subj[
             (mprage_meta_subj["Orig/Proc"] == "Processed")
             & (mprage_meta_subj.Visit == visit_str)
+            & mprage_meta_subj.Sequence.str.endswith("N3m", na=False)
+        ]
+
+    if filtered_mprage.empty:
+        filtered_mprage = mprage_meta_subj[
+            (mprage_meta_subj["Orig/Proc"] == "Processed")
+            & (mprage_meta_subj.Visit == visit_str)
             # & mprage_meta_subj.Sequence.str.endswith("N3m", na=False)
         ]
 
@@ -366,6 +373,14 @@ def adni3_image(subject_id, timepoint, visit_str, mprage_meta_subj, mayo_mri_qc_
         & mprage_meta_subj.Sequence.str.contains("accel", case=False, na=False)
         & ~mprage_meta_subj.Sequence.str.lower().str.endswith("_nd", na=False)
     ]
+
+    if filtered_scan.empty:
+        filtered_scan = mprage_meta_subj[
+            (mprage_meta_subj["Orig/Proc"] == "Original")
+            & (mprage_meta_subj.Visit == visit_str)
+            # & mprage_meta_subj.Sequence.str.contains("accel", case=False, na=False)
+            # & ~mprage_meta_subj.Sequence.str.lower().str.endswith("_nd", na=False)
+            ]
 
     if filtered_scan.empty:
         cprint(
@@ -440,8 +455,9 @@ def original_image(
             # & ~mprage_meta_subj_orig.Sequence.str.contains("acc", case=False, na=False)
     )
 
-    # filtered_scan = mprage_meta_subj_orig[cond_mprage | cond_spgr]
-    filtered_scan = mprage_meta_subj_orig
+    filtered_scan = mprage_meta_subj_orig[cond_mprage | cond_spgr]
+    if filtered_scan.empty:
+        filtered_scan = mprage_meta_subj_orig
 
 
     if filtered_scan.empty:

@@ -350,6 +350,7 @@ def execute():
     from clinicaml.iotools.utils.data_handling_cli import (
         CmdParserCenterNifti,
         CmdParserMergeTsv,
+        CmdParserGetMetadata,
         CmdParserMissingProcessing,
         CmdParserMissingModalities,
         CmdParserSubjectsSessions,
@@ -358,6 +359,7 @@ def execute():
     io_tools = [
         CmdParserSubjectsSessions(),
         CmdParserMergeTsv(),
+        CmdParserGetMetadata(),
         CmdParserMissingProcessing(),
         CmdParserMissingModalities(),
         CmdParserCenterNifti(),

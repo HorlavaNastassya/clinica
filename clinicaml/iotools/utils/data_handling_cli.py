@@ -36,6 +36,33 @@ class CmdParserSubjectsSessions(ce.CmdParser):
         )
         cprint("The TSV file was saved to %s" % os.path.abspath(args.out_tsv))
 
+class CmdParserGetMetadata(ce.CmdParser):
+    def define_name(self):
+        self._name = "get-metadata"
+
+    def define_description(self):
+        self._description = "Merge XML files containing metadata of a BIDS dataset into a single TSV file."
+
+    def define_options(self):
+        from clinicaml.engine.cmdparser import PIPELINE_CATEGORIES
+
+        # Clinica compulsory arguments (e.g. BIDS, out_tsv)
+        clinica_comp = self._args.add_argument_group(
+            PIPELINE_CATEGORIES["CLINICA_COMPULSORY"]
+        )
+        clinica_comp.add_argument(
+            "meta_directory", help="Path to the directory containing XML meta filse"
+        )
+        clinica_comp.add_argument("out_tsv", help="Path to the output file.")
+
+
+    def run_command(self, args):
+        from clinicaml.iotools.utils import data_handling as dt
+        dt.get_merged_metafile(
+            args.meta_directory,
+            args.out_tsv
+        )
+
 
 class CmdParserMergeTsv(ce.CmdParser):
     def define_name(self):

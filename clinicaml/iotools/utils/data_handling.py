@@ -19,6 +19,79 @@ def compute_default_filename(out_path):
 
     return tsv_path
 
+def available_metafiles(source_dir, ext=".xml"):
+    import os
+    subject_ids=[]
+    for (dirpath, dirnames, filenames) in os.walk(source_dir):
+        for f in filenames:
+            if f.endswith(ext):
+                subject_ids.append(f)
+    return subject_ids
+
+def compute_default_metafilename(out_path):
+    from os import path
+
+    abspath = path.abspath(out_path)
+    # If given path is a directory, append a filename
+    if path.isdir(abspath):
+        tsv_path = path.join(out_path, "metadata_merge.tsv")
+    elif "." not in path.basename(abspath):
+        tsv_path = f"{out_path}.tsv"
+    else:
+        if path.splitext(out_path)[1] != ".tsv":
+            raise TypeError("Output path extension must be tsv.")
+        tsv_path = out_path
+    return tsv_path
+
+def get_merged_metafile(source_dir, out_tsv):
+    import os
+    import pandas as pd
+    import pandas_read_xml as pdx
+
+    def isfloat(value):
+        try:
+            float(value)
+            return True
+        except ValueError:
+            return False
+
+    from os import path
+    out_path = compute_default_metafilename(out_tsv)
+    out_dir = path.dirname(out_path)
+    os.makedirs(out_dir, exist_ok=True)
+
+    metafiles = available_metafiles(source_dir)
+    for i, file in enumerate(metafiles):
+        meta_details = {}
+        meta_details["alternative_id_1"] = \
+        pdx.read_xml(os.path.join(source_dir, file), ["idaxs", "project", "subject"])["subjectIdentifier"][0]
+        meta_details["scan_id"] = pdx.read_xml(os.path.join(source_dir, file),
+                                               ["idaxs", "project", "subject", "study", "series", "seriesLevelMeta",
+                                                "derivedProduct"])["imageUID"][0]
+
+        protocol_info_df = pdx.read_xml(os.path.join(source_dir, file),
+                                        ["idaxs", "project", "subject", "study", "series", "seriesLevelMeta",
+                                         "relatedImageDetail",
+                                         "originalRelatedImage", "protocolTerm", "protocol"])
+        protocol_info_objects = [protocol_info_df[i] for i in range(protocol_info_df.shape[1])]
+
+        for j in range(len(protocol_info_objects)):
+            protocol_info_j = list(protocol_info_objects[j][0].values())
+            if len(protocol_info_j) == 2:
+                key, value = protocol_info_j
+            else:
+                key, value = protocol_info_j[0], '-'
+
+            meta_details[key] = float(value) if isfloat(value) else value
+        protocol_details_df = pd.DataFrame(meta_details, index=[0], columns=meta_details.keys())
+        if i == 0:
+            merge_tsv = pd.DataFrame(columns=meta_details.keys())
+            merge_tsv = merge_tsv.append(protocol_details_df)
+        else:
+            merge_tsv = merge_tsv.append(protocol_details_df)
+
+    merge_tsv.to_csv(out_path, sep="\t", index=False)
+
 
 def create_merge_file(
     bids_dir, out_tsv, caps_dir=None, tsv_file=None, pipelines=None,
