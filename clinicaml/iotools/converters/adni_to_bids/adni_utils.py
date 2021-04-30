@@ -32,49 +32,49 @@ def visits_to_timepoints(
     pending_timepoints = []
 
     # We try to obtain the corresponding image Visit for a given VISCODE
-    for adni_row in adnimerge_subj.iterrows():
-        visit = adni_row[1]
-        preferred_visit_name = get_preferred_visit_name(visit)
-
-        if preferred_visit_name in unique_visits:
-            key_preferred_visit = (visit.VISCODE, visit.COLPROT, visit.ORIGPROT)
-            if key_preferred_visit not in visits.keys():
-                visits[key_preferred_visit] = preferred_visit_name
-            elif visits[key_preferred_visit] != preferred_visit_name:
-                cprint(
-                    f"[{modality}] Subject {subject} has multiple visits for one timepoint."
-                )
-
-            unique_visits.remove(preferred_visit_name)
-            continue
-
-        pending_timepoints.append(visit)
-
-    # Then for images.Visit non matching the expected labels we find the closest date in visits list
-    for visit in unique_visits:
-
-        image = (mri_list_subj[mri_list_subj[visit_field] == visit]).iloc[0]
-
-        key_min_visit = get_closest_visit(
-            image, pending_timepoints, subject, visit_field, scandate_field
-        )
-
-        if not key_min_visit:
-            continue
-
-        if key_min_visit not in visits.keys():
-            visits[key_min_visit] = image[visit_field]
-        elif visits[key_min_visit] != image[visit_field]:
-            cprint(
-                f"[{modality}] Subject {subject} has multiple visits for one timepoint."
-            )
+    # for adni_row in adnimerge_subj.iterrows():
+    #     visit = adni_row[1]
+    #     preferred_visit_name = get_preferred_visit_name(visit)
+    #
+    #     if preferred_visit_name in unique_visits:
+    #         key_preferred_visit = (visit.VISCODE, visit.COLPROT, visit.ORIGPROT)
+    #         if key_preferred_visit not in visits.keys():
+    #             visits[key_preferred_visit] = preferred_visit_name
+    #         elif visits[key_preferred_visit] != preferred_visit_name:
+    #             cprint(
+    #                 f"[{modality}] Subject {subject} has multiple visits for one timepoint."
+    #             )
+    #
+    #         unique_visits.remove(preferred_visit_name)
+    #         continue
+    #
+    #     pending_timepoints.append(visit)
+    #
+    # # Then for images.Visit non matching the expected labels we find the closest date in visits list
+    # for visit in unique_visits:
+    #
+    #     image = (mri_list_subj[mri_list_subj[visit_field] == visit]).iloc[0]
+    #
+    #     key_min_visit = get_closest_visit(
+    #         image, pending_timepoints, subject, visit_field, scandate_field
+    #     )
+    #
+    #     if not key_min_visit:
+    #         continue
+    #
+    #     if key_min_visit not in visits.keys():
+    #         visits[key_min_visit] = image[visit_field]
+    #     elif visits[key_min_visit] != image[visit_field]:
+    #         cprint(
+    #             f"[{modality}] Subject {subject} has multiple visits for one timepoint."
+    #         )
 
 
     #MY VERSION:
-    # for adni_row in adnimerge_subj.iterrows():
-    #     visit = adni_row[1]
-    #     key_preferred_visit = (visit.VISCODE, visit.COLPROT, visit.ORIGPROT)
-    #     visits[key_preferred_visit] = get_preferred_visit_name(visit)
+    for adni_row in adnimerge_subj.iterrows():
+        visit = adni_row[1]
+        key_preferred_visit = (visit.VISCODE, visit.COLPROT, visit.ORIGPROT)
+        visits[key_preferred_visit] = get_preferred_visit_name(visit)
 
     return visits
 
