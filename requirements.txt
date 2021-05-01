@@ -19,6 +19,6 @@ matplotlib
 niflow-nipype1-workflows
 scikit-image == 0.16.2
 torch > 1.0
-pandas_read_xml
+# pandas_read_xml
 # torchvision
 

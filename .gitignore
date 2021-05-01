@@ -28,4 +28,6 @@ crash*
 .pytest_cache/
 test/data
 
-
+# Jupyter Notebook
+.ipynb_checkpoints
+clinicaml/**/.ipynb_checkpoints
