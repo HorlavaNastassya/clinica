@@ -81,6 +81,10 @@ class CmdParserMergeTsv(ce.CmdParser):
         clinica_comp.add_argument(
             "bids_directory", help="Path to the BIDS dataset directory."
         )
+
+        clinica_comp.add_argument(
+            "meta_file", help="Path to the file with meta information (filename included)"
+        )
         clinica_comp.add_argument("out_tsv", help="Path to the output file.")
 
         # Optional arguments
@@ -181,6 +185,7 @@ class CmdParserMergeTsv(ce.CmdParser):
         check_bids_folder(args.bids_directory)
         dt.create_merge_file(
             args.bids_directory,
+            args.meta_file,
             args.out_tsv,
             caps_dir=args.caps_directory,
             pipelines=args.pipelines,

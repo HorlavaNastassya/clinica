@@ -56,27 +56,30 @@ def get_merged_metafile(source_dir, out_tsv):
             return False
 
     from os import path
+    import xmltodict
     out_path = compute_default_metafilename(out_tsv)
     out_dir = path.dirname(out_path)
     os.makedirs(out_dir, exist_ok=True)
 
     metafiles = available_metafiles(source_dir)
+
     for i, file in enumerate(metafiles):
+        xml_data = open(os.path.join(source_dir, file), 'r').read()  # Read data
+        xmlDict = xmltodict.parse(xml_data)  # Parse XML
+
         meta_details = {}
-        meta_details["alternative_id_1"] = \
-        pdx.read_xml(os.path.join(source_dir, file), ["idaxs", "project", "subject"])["subjectIdentifier"][0]
-        meta_details["scan_id"] = pdx.read_xml(os.path.join(source_dir, file),
-                                               ["idaxs", "project", "subject", "study", "series", "seriesLevelMeta",
-                                                "derivedProduct"])["imageUID"][0]
-
-        protocol_info_df = pdx.read_xml(os.path.join(source_dir, file),
-                                        ["idaxs", "project", "subject", "study", "series", "seriesLevelMeta",
-                                         "relatedImageDetail",
-                                         "originalRelatedImage", "protocolTerm", "protocol"])
-        protocol_info_objects = [protocol_info_df[i] for i in range(protocol_info_df.shape[1])]
-
+        meta_details["alternative_id_1"] = xmlDict["idaxs"]["project"]["subject"]["subjectIdentifier"]
+        meta_details["scan_id"] = \
+            xmlDict["idaxs"]["project"]["subject"]["study"]["series"]["seriesLevelMeta"]["derivedProduct"]["imageUID"]
+        relatedImageDetail = xmlDict["idaxs"]["project"]["subject"]["study"]["series"]["seriesLevelMeta"][
+            "relatedImageDetail"]
+        if type(relatedImageDetail) is list:
+            protocol_info_df = relatedImageDetail[0]["originalRelatedImage"]["protocolTerm"]["protocol"]
+        else:
+            protocol_info_df = relatedImageDetail["originalRelatedImage"]["protocolTerm"]["protocol"]
+        protocol_info_objects = [el for el in protocol_info_df]
         for j in range(len(protocol_info_objects)):
-            protocol_info_j = list(protocol_info_objects[j][0].values())
+            protocol_info_j = list(protocol_info_objects[j].values())
             if len(protocol_info_j) == 2:
                 key, value = protocol_info_j
             else:
@@ -94,13 +97,14 @@ def get_merged_metafile(source_dir, out_tsv):
 
 
 def create_merge_file(
-    bids_dir, out_tsv, caps_dir=None, tsv_file=None, pipelines=None,
+    bids_dir, meta_file, out_tsv, caps_dir=None, tsv_file=None, pipelines=None,
         ignore_scan_files=False, ignore_sessions_files=False, **kwargs
 ):
     """Merge all the TSV files containing clinical data of a BIDS compliant dataset and store the result inside a TSV file.
 
     Args:
         bids_dir: path to the BIDS folder
+        meta_file: path to the file containing merged meta data
         out_tsv: path to the output tsv file
         caps_dir: path to the CAPS folder (optional)
         tsv_file: TSV file containing the subjects with their sessions (optional)
@@ -127,6 +131,8 @@ def create_merge_file(
         raise IOError("participants.tsv not found in the specified BIDS directory")
     participants_df = pd.read_csv(path.join(bids_dir, "participants.tsv"), sep="\t")
 
+    meta_df = pd.read_csv(meta_file, sep="\t")
+
     sessions, subjects = get_subject_session_list(
         bids_dir, ss_file=tsv_file, use_session_tsv=False
     )
@@ -152,8 +158,15 @@ def create_merge_file(
         if ignore_sessions_files:
             for _, session in subject_df.index.values:
                 row_session_df = pd.DataFrame([[session]], columns=["session_id"])
+                ##ToDO: check if works correctly
+                row_meta_df = meta_df[meta_df.scan_id == row_session_df.scan_id]
+                row_meta_df.reset_index(inplace=True, drop=True)
+                if len(row_meta_df) == 0:
+                    raise DatasetError(
+                        meta_df.loc[0, "scan_id"] + " / " + session
+                    )
 
-                row_df = pd.concat([row_participant_df, row_session_df], axis=1)
+                row_df = pd.concat([row_participant_df, row_session_df, row_meta_df], axis=1)
                 merged_df = merged_df.append(row_df)
 
         else:
@@ -168,6 +181,7 @@ def create_merge_file(
                     raise DatasetError(
                         sessions_df.loc[0, "session_id"] + " / " + session
                     )
+
 
                 # Read scans TSV files
                 scan_path = path.join(
@@ -191,10 +205,13 @@ def create_merge_file(
                                 new_col_name = f"{modality}_{col}"
                                 scans_dict.update({new_col_name: value})
                     row_scans_df = pd.DataFrame(scans_dict, index=[0])
+                    row_meta_df = meta_df[meta_df.scan_id == row_scans_df.T1w_scan_id[0]][["Manufacturer", "Mfg Model"]]
+                    row_meta_df.reset_index(inplace=True, drop=True)
                 else:
                     row_scans_df = pd.DataFrame()
+                    row_meta_df=pd.DataFrame()
 
-                row_df = pd.concat([row_participant_df, row_session_df, row_scans_df], axis=1)
+                row_df = pd.concat([row_participant_df, row_session_df, row_scans_df, row_meta_df], axis=1)
                 merged_df = merged_df.append(row_df)
 
     # Put participant_id and session_id first
