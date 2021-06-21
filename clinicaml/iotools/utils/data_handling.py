@@ -62,7 +62,7 @@ def get_merged_metafile(source_dir, out_tsv):
     os.makedirs(out_dir, exist_ok=True)
 
     metafiles = available_metafiles(source_dir)
-
+    merge_tsv = pd.DataFrame()
     for i, file in enumerate(metafiles):
         xml_data = open(os.path.join(source_dir, file), 'r').read()  # Read data
         xmlDict = xmltodict.parse(xml_data)  # Parse XML
@@ -86,6 +86,9 @@ def get_merged_metafile(source_dir, out_tsv):
                 key, value = protocol_info_j[0], '-'
 
             meta_details[key] = float(value) if isfloat(value) else value
+            
+        meta_details["preprocessing"] = xmlDict["idaxs"]["project"]["subject"]["study"]["series"]["seriesLevelMeta"]["derivedProduct"]["processedDataLabel"]
+        
         protocol_details_df = pd.DataFrame(meta_details, index=[0], columns=meta_details.keys())
         if i == 0:
             merge_tsv = pd.DataFrame(columns=meta_details.keys())
@@ -205,7 +208,7 @@ def create_merge_file(
                                 new_col_name = f"{modality}_{col}"
                                 scans_dict.update({new_col_name: value})
                     row_scans_df = pd.DataFrame(scans_dict, index=[0])
-                    row_meta_df = meta_df[meta_df.scan_id == row_scans_df.T1w_scan_id[0]][["Manufacturer", "Mfg Model"]]
+                    row_meta_df = meta_df[meta_df.scan_id == row_scans_df.T1w_scan_id[0]][["Manufacturer", "Mfg Model", "preprocessing"]]
                     row_meta_df.reset_index(inplace=True, drop=True)
                 else:
                     row_scans_df = pd.DataFrame()
