@@ -71,6 +71,7 @@ def get_merged_metafile(source_dir, out_tsv):
         meta_details["alternative_id_1"] = xmlDict["idaxs"]["project"]["subject"]["subjectIdentifier"]
         meta_details["scan_id"] = \
             xmlDict["idaxs"]["project"]["subject"]["study"]["series"]["seriesLevelMeta"]["derivedProduct"]["imageUID"]
+        meta_details["visitIdentifier"] = xmlDict["idaxs"]["project"]["subject"]["visit"]["visitIdentifier"]
         relatedImageDetail = xmlDict["idaxs"]["project"]["subject"]["study"]["series"]["seriesLevelMeta"][
             "relatedImageDetail"]
         if type(relatedImageDetail) is list:
@@ -208,7 +209,7 @@ def create_merge_file(
                                 new_col_name = f"{modality}_{col}"
                                 scans_dict.update({new_col_name: value})
                     row_scans_df = pd.DataFrame(scans_dict, index=[0])
-                    row_meta_df = meta_df[meta_df.scan_id == row_scans_df.T1w_scan_id[0]][["Manufacturer", "Mfg Model", "preprocessing"]]
+                    row_meta_df = meta_df[meta_df.scan_id == row_scans_df.T1w_scan_id[0]][["Manufacturer", "Mfg Model", "preprocessing", "TE", "TR", "TI", "visitIdentifier"]]
                     row_meta_df.reset_index(inplace=True, drop=True)
                 else:
                     row_scans_df = pd.DataFrame()
